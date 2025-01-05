@@ -29,3 +29,17 @@ def get_user_input():
             return x, y
         except ValueError:
             print("Invalid input. Please enter in the format row,col (e.g., 1,2).")
+
+def make_shot(grid, x, y):
+    """Processes a shot on the grid."""
+    if grid[x][y] == "S":
+        grid[x][y] = "X"
+        print("Hit!")
+        return True
+    elif grid[x][y] == "~":
+        grid[x][y] = "O"
+        print("Miss.")
+        return False
+    else:
+        print("You already shot here!")
+        return False
