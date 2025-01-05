@@ -50,3 +50,29 @@ def check_game_over(grid):
         if "S" in row:
             return False
     return True
+
+def battleships_game():
+    """Main function for the Battleships game."""
+    grid_size = 5
+    ship_count = 3
+
+    user_grid = initialize_grid(grid_size)
+    computer_grid = initialize_grid(grid_size)
+
+    place_ships(computer_grid, ship_count)
+
+    print("Welcome to Battleships!")
+    while True:
+        print("Your grid:")
+        print_grid(user_grid)
+
+        print("Take your shot!")
+        x, y = get_user_input()
+        if 0 <= x < grid_size and 0 <= y < grid_size:
+            make_shot(computer_grid, x, y)
+            if check_game_over(computer_grid):
+                print("Congratulations! You sank all the ships!")
+                break
+        else:
+            print("Invalid coordinates. Please try again.")
+
