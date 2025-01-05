@@ -43,3 +43,10 @@ def make_shot(grid, x, y):
     else:
         print("You already shot here!")
         return False
+
+def check_game_over(grid):
+    """Checks if all ships have been sunk."""
+    for row in grid:
+        if "S" in row:
+            return False
+    return True
