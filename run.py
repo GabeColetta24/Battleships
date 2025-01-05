@@ -75,4 +75,16 @@ def battleships_game():
                 break
         else:
             print("Invalid coordinates. Please try again.")
+        
+        print("Opponent's turn to shoot.")
+        while True:
+            cx, cy = random.randint(0, grid_size - 1), random.randint(0, grid_size - 1)
+            if user_grid[cx][cy] in ["~", "S"]:
+                hit = make_shot(user_grid, cx, cy)
+                if hit and check_game_over(user_grid):
+                    print("Game over! The opponent sank all your ships.")
+                    return
+                break
 
+if __name__ == "__main__":
+    battleships_game()
