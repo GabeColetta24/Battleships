@@ -92,10 +92,73 @@ class Board:
         # Already HIT or MISS
         return None
 
+def play_game(size=5):
+    """
+    Orchestrate a full Battleships game:
+    - size: dimension of the square grid
+    """
+    # 1) Create boards for player and computer
+    player_board = Board(size=size)
+    computer_board = Board(size=size)
+
+    print("Welcome to Battleships!")
+    print("Your board (ships shown):")
+    player_board.display(reveal=True)
+
+    turn = 0  # 0 = player’s turn, 1 = computer’s turn
+    while True:
+        if turn == 0:
+            # ---- Player's turn ----
+            print("\nYour turn to shoot at the enemy.")
+            # Loop until valid, new coordinates are entered
+            while True:
+                user_input = input("Enter row and column (e.g. `1 3`): ")
+                try:
+                    r_str, c_str = user_input.split()
+                    r, c = int(r_str), int(c_str)
+                except ValueError:
+                    print("⚠️ Invalid format. Please enter two numbers separated by a space.")
+                    continue
+
+                result = computer_board.register_shot(r, c)
+                if result is None:
+                    print("⚠️ Off-grid or already shot. Try different coordinates.")
+                    continue
+                print("✅ Hit!" if result else "❌ Miss.")
+                break
+
+            print("\nEnemy board:")
+            computer_board.display(reveal=False)
+
+            # Check for win
+            if all(cell != Board.SHIP for row in computer_board.grid for cell in row):
+                print("\n🎉 You sank all the enemy ships! You win!")
+                break
+
+        else:
+            # ---- Computer's turn ----
+            print("\nComputer's turn to shoot at you...")
+            while True:
+                r = random.randrange(size)
+                c = random.randrange(size)
+                result = player_board.register_shot(r, c)
+                if result is None:
+                    continue
+                print(f"Computer shot at ({r},{c}) and {'hit!' if result else 'missed.'}")
+                break
+
+            print("\nYour board (ships & hits shown):")
+            player_board.display(reveal=True)
+
+            # Check for loss
+            if all(cell != Board.SHIP for row in player_board.grid for cell in row):
+                print("\n💀 All your ships have been sunk. Game over.")
+                break
+
+        # Switch turns
+        turn = 1 - turn
+
 if __name__ == '__main__':
-    # Example run with a 5×5 board
-    b = Board(size=5)
-    print("Computer’s ships (for testing):")
-    b.display(reveal=True)
-    print("\nHidden view (player’s board):")
-    b.display(reveal=False)
+    play_game(size=5)
+
+
