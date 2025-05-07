@@ -1,6 +1,10 @@
 import random
 
 class Board:
+    """
+    Represents a game board for Battleships, manages ship placement,
+    tracking shots, and detecting hits, misses, and sunk ships.
+    """
     # Cell states
     EMPTY = ' '   # no ship, no shot yet
     SHIP  = '■'   # a ship segment
@@ -18,11 +22,16 @@ class Board:
         self.ship_sizes = ship_sizes or [3, 2, 2, 1, 1, 1]
         # Create an empty grid
         self.grid = [[self.EMPTY] * size for _ in range(size)]
-        # Randomly place all ships
+        # Keep track of each ship's coordinates for sunk detection
+        self.ships = []  # each ship is a list of (r,c) tuples
+        # Randomly place all ships and record their positions
         self._place_all_ships()
 
     def _place_all_ships(self):
-        """Place each ship in the fleet without overlapping."""
+        """
+        Place each ship in the fleet without overlapping.
+        Records each ship's coordinate list in self.ships.
+        """
         for length in self.ship_sizes:
             placed = False
             while not placed:
@@ -30,6 +39,12 @@ class Board:
                 row = random.randrange(self.size)
                 col = random.randrange(self.size)
                 if self._can_place(row, col, length, orientation):
+                    # Compute ship coordinates
+                    dr, dc = (0, 1) if orientation == 'H' else (1, 0)
+                    coords = [(row + dr * i, col + dc * i) for i in range(length)]
+                    # Record the ship
+                    self.ships.append(coords)
+                    # Mark on grid
                     self._place_ship(row, col, length, orientation)
                     placed = True
 
@@ -75,29 +90,43 @@ class Board:
     def register_shot(self, r, c):
         """
         Record a shot at (r,c).
-        - Returns True  for a hit
-        - Returns False for a miss
-        - Returns None  if invalid coords or already shot there
+        Returns a tuple (status, length):
+        - status: 'invalid', 'miss', 'hit', or 'sunk'
+        - length: length of sunk ship if status=='sunk', else None
         """
-        # Check bounds
+        # Validate coordinates
         if not (0 <= r < self.size and 0 <= c < self.size):
-            return None
+            return 'invalid', None
         cell = self.grid[r][c]
+        # Already shot here?
+        if cell in (self.HIT, self.MISS):
+            return 'invalid', None
+        # Hit
         if cell == self.SHIP:
             self.grid[r][c] = self.HIT
-            return True
+            # Identify which ship was hit
+            for ship in self.ships:
+                if (r, c) in ship:
+                    # Check if all segments of this ship are hit
+                    if all(self.grid[rr][cc] == self.HIT for rr, cc in ship):
+                        # It's sunk!
+                        self.ships.remove(ship)
+                        return 'sunk', len(ship)
+                    # Just a hit, not sunk yet
+                    return 'hit', None
+        # Miss
         if cell == self.EMPTY:
             self.grid[r][c] = self.MISS
-            return False
-        # Already HIT or MISS
-        return None
+            return 'miss', None
+        # Fallback invalid
+        return 'invalid', None
+
 
 def play_game(size=5):
     """
     Orchestrate a full Battleships game:
     - size: dimension of the square grid
     """
-    # 1) Create boards for player and computer
     player_board = Board(size=size)
     computer_board = Board(size=size)
 
@@ -105,12 +134,11 @@ def play_game(size=5):
     print("Your board (ships shown):")
     player_board.display(reveal=True)
 
-    turn = 0  # 0 = player’s turn, 1 = computer’s turn
+    turn = 0  # 0 = player's turn, 1 = computer's turn
     while True:
         if turn == 0:
             # ---- Player's turn ----
             print("\nYour turn to shoot at the enemy.")
-            # Loop until valid, new coordinates are entered
             while True:
                 user_input = input("Enter row and column (e.g. `1 3`): ")
                 try:
@@ -120,18 +148,23 @@ def play_game(size=5):
                     print("⚠️ Invalid format. Please enter two numbers separated by a space.")
                     continue
 
-                result = computer_board.register_shot(r, c)
-                if result is None:
+                status, length = computer_board.register_shot(r, c)
+                if status == 'invalid':
                     print("⚠️ Off-grid or already shot. Try different coordinates.")
                     continue
-                print("✅ Hit!" if result else "❌ Miss.")
+                if status == 'hit':
+                    print("✅ Hit!")
+                elif status == 'sunk':
+                    print(f"💥 You just sank an enemy ship of length {length}!")
+                else:
+                    print("❌ Miss.")
                 break
 
             print("\nEnemy board:")
             computer_board.display(reveal=False)
 
             # Check for win
-            if all(cell != Board.SHIP for row in computer_board.grid for cell in row):
+            if not computer_board.ships:
                 print("\n🎉 You sank all the enemy ships! You win!")
                 break
 
@@ -141,24 +174,27 @@ def play_game(size=5):
             while True:
                 r = random.randrange(size)
                 c = random.randrange(size)
-                result = player_board.register_shot(r, c)
-                if result is None:
+                status, _ = player_board.register_shot(r, c)
+                if status == 'invalid':
                     continue
-                print(f"Computer shot at ({r},{c}) and {'hit!' if result else 'missed.'}")
+                if status == 'hit':
+                    print(f"Computer shot at ({r},{c}) and hit!")
+                elif status == 'sunk':
+                    print(f"Computer shot at ({r},{c}) and sunk one of your ships!")
+                else:
+                    print(f"Computer shot at ({r},{c}) and missed.")
                 break
 
             print("\nYour board (ships & hits shown):")
             player_board.display(reveal=True)
 
             # Check for loss
-            if all(cell != Board.SHIP for row in player_board.grid for cell in row):
+            if not player_board.ships:
                 print("\n💀 All your ships have been sunk. Game over.")
                 break
 
-        # Switch turns
         turn = 1 - turn
+
 
 if __name__ == '__main__':
     play_game(size=5)
-
-
