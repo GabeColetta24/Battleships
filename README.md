@@ -16,3 +16,10 @@ Welcome to **Battleships**, a terminal-based classic naval strategy game. You co
   - Misses (`·`) displayed in blue
   - Notifications when individual ships are sunk
 - **Simple AI opponent**: Computer fires at random unseen cells
+
+## Technologies Used
+
+- **Python 3.x** – language and runtime  
+- **Colorama** – for colored terminal output  
+- **GitHub Actions** – continuous integration and CLI validation  
+
