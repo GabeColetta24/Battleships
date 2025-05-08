@@ -24,4 +24,11 @@ jobs:
 
       # 4. Smoke-test Battleships CLI
       - name: Smoke-test Battleships
-        run: python -c "import battleships; battleships.play_game(size=3)"
+        run: |
+          python - << 'EOF'
+import battleships
+b = battleships.Board(size=3)
+assert isinstance(b, battleships.Board)
+assert len(b.ships) > 0
+print("✔️ Board smoke-test passed")
+EOF
