@@ -1,0 +1,27 @@
+name: CLI Validation
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out the repository
+      - uses: actions/checkout@v3
+
+      # 2. Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # 4. Smoke-test Battleships CLI
+      - name: Smoke-test Battleships
+        run: python -c "import battleships; battleships.play_game(size=3)"
