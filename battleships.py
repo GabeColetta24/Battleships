@@ -5,16 +5,18 @@ from colorama import Fore, Style
 # Initialize colorama so colors reset after each print
 colorama.init(autoreset=True)
 
+
 class Board:
     """
     Represents a game board for Battleships, manages ship placement,
     tracking shots, and detecting hits, misses, and sunk ships.
     """
+
     # Cell states
-    EMPTY = ' '   # no ship, no shot yet
-    SHIP  = '■'   # a ship segment
-    HIT   = 'X'   # ship was hit here
-    MISS  = '·'   # shot into empty water
+    EMPTY = " "  # no ship, no shot yet
+    SHIP = "■"  # a ship segment
+    HIT = "X"  # ship was hit here
+    MISS = "·"  # shot into empty water
 
     def __init__(self, size=5, ship_sizes=None):
         """
@@ -40,13 +42,15 @@ class Board:
         for length in self.ship_sizes:
             placed = False
             while not placed:
-                orientation = random.choice(['H', 'V'])
+                orientation = random.choice(["H", "V"])
                 row = random.randrange(self.size)
                 col = random.randrange(self.size)
                 if self._can_place(row, col, length, orientation):
                     # Compute ship coordinates
-                    dr, dc = (0, 1) if orientation == 'H' else (1, 0)
-                    coords = [(row + dr * i, col + dc * i) for i in range(length)]
+                    dr, dc = (0, 1) if orientation == "H" else (1, 0)
+                    coords = [
+                        (row + dr * i, col + dc * i) for i in range(length)
+                    ]
                     # Record the ship
                     self.ships.append(coords)
                     # Mark on grid
@@ -58,7 +62,7 @@ class Board:
         Check if a ship of given length/orientation can go at (r,c)
         without going off-grid or overlapping another ship.
         """
-        dr, dc = (0, 1) if orientation == 'H' else (1, 0)
+        dr, dc = (0, 1) if orientation == "H" else (1, 0)
         for i in range(length):
             rr, cc = r + dr * i, c + dc * i
             if not (0 <= rr < self.size and 0 <= cc < self.size):
@@ -69,7 +73,7 @@ class Board:
 
     def _place_ship(self, r, c, length, orientation):
         """Mark the cells for a ship of given length at (r,c)."""
-        dr, dc = (0, 1) if orientation == 'H' else (1, 0)
+        dr, dc = (0, 1) if orientation == "H" else (1, 0)
         for i in range(length):
             self.grid[r + dr * i][c + dc * i] = self.SHIP
 
@@ -80,7 +84,7 @@ class Board:
         - reveal=True: shows all ships
         """
         # Column headers
-        header = '   ' + ' '.join(str(i) for i in range(self.size))
+        header = "   " + " ".join(str(i) for i in range(self.size))
         print(header)
         # Each row
         for idx, row in enumerate(self.grid):
@@ -95,7 +99,7 @@ class Board:
                 else:
                     display_char = cell
                 row_str.append(display_char)
-            print(f"{idx}  " + ' '.join(row_str))
+            print(f"{idx}  " + " ".join(row_str))
 
     def register_shot(self, r, c):
         """
@@ -106,11 +110,11 @@ class Board:
         """
         # Validate coordinates
         if not (0 <= r < self.size and 0 <= c < self.size):
-            return 'invalid', None
+            return "invalid", None
         cell = self.grid[r][c]
         # Already shot here?
         if cell in (self.HIT, self.MISS):
-            return 'invalid', None
+            return "invalid", None
         # Hit
         if cell == self.SHIP:
             self.grid[r][c] = self.HIT
@@ -121,15 +125,15 @@ class Board:
                     if all(self.grid[rr][cc] == self.HIT for rr, cc in ship):
                         # It's sunk!
                         self.ships.remove(ship)
-                        return 'sunk', len(ship)
+                        return "sunk", len(ship)
                     # Just a hit, not sunk yet
-                    return 'hit', None
+                    return "hit", None
         # Miss
         if cell == self.EMPTY:
             self.grid[r][c] = self.MISS
-            return 'miss', None
+            return "miss", None
         # Fallback invalid
-        return 'invalid', None
+        return "invalid", None
 
 
 def play_game(size=5):
@@ -155,17 +159,23 @@ def play_game(size=5):
                     r_str, c_str = user_input.split()
                     r, c = int(r_str), int(c_str)
                 except ValueError:
-                    print("⚠️ Invalid format. Please enter two numbers separated by a space.")
+                    print(
+                        "⚠️ Invalid format. Please enter two numbers separated by a space."
+                    )
                     continue
 
                 status, length = computer_board.register_shot(r, c)
-                if status == 'invalid':
-                    print("⚠️ Off-grid or already shot. Try different coordinates.")
+                if status == "invalid":
+                    print(
+                        "⚠️ Off-grid or already shot. Try different coordinates."
+                    )
                     continue
-                if status == 'hit':
+                if status == "hit":
                     print("✅ Hit!")
-                elif status == 'sunk':
-                    print(f"💥 You just sank an enemy ship of length {length}!")
+                elif status == "sunk":
+                    print(
+                        f"💥 You just sank an enemy ship of length {length}!"
+                    )
                 else:
                     print("❌ Miss.")
                 break
@@ -185,12 +195,14 @@ def play_game(size=5):
                 r = random.randrange(size)
                 c = random.randrange(size)
                 status, _ = player_board.register_shot(r, c)
-                if status == 'invalid':
+                if status == "invalid":
                     continue
-                if status == 'hit':
+                if status == "hit":
                     print(f"Computer shot at ({r},{c}) and hit!")
-                elif status == 'sunk':
-                    print(f"Computer shot at ({r},{c}) and sunk one of your ships!")
+                elif status == "sunk":
+                    print(
+                        f"Computer shot at ({r},{c}) and sunk one of your ships!"
+                    )
                 else:
                     print(f"Computer shot at ({r},{c}) and missed.")
                 break
@@ -206,5 +218,5 @@ def play_game(size=5):
         turn = 1 - turn
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     play_game(size=5)
