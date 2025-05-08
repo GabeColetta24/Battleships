@@ -63,3 +63,11 @@ I mapped out the game using a flowchart before coding
 ![Flowchart of game logic](assets/documentation/battleship-flowchart.png)
 
 This flowchart provided a clear blueprint for implementation, ensuring that each step (ship placement, input validation, hit/miss handling, and win detection) was developed in a logical order. 
+
+## Future Enhancements
+
+- **Dynamic grid sizing at runtime**: Prompt the player to choose grid dimensions before starting the game.
+- **Advanced AI opponent**: Implement a hunt/target algorithm for smarter computer moves.
+- **Manual ship placement**: Allow players to position their ships manually with coordinate input.
+- **Multiplayer mode**: Add local or networked two-player functionality.
+- **Replay & statistics**: Track and display win/loss records and session stats.
