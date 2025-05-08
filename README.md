@@ -71,3 +71,19 @@ This flowchart provided a clear blueprint for implementation, ensuring that each
 - **Manual ship placement**: Allow players to position their ships manually with coordinate input.
 - **Multiplayer mode**: Add local or networked two-player functionality.
 - **Replay & statistics**: Track and display win/loss records and session stats.
+
+## Deployment & CI
+
+### How to Deploy (GitHub Pages)
+
+1. In your GitHub repo, go to **Settings** → **Pages**.  
+2. Under **Source**, select **Branch: main** and **Folder: /(root)**.  
+3. Click **Save**.  
+4. After a minute, the banner will show your site URL (e.g. `https://GabeColetta24.github.io/Battleships/`).  
+
+- **Live demo**: https://GabeColetta24.github.io/Battleships/  
+- **CI workflow**:  
+  ![CI](https://github.com/GabeColetta24/Battleships/actions/workflows/python-app.yml/badge.svg)
+
+> **Note:** This is a CLI application. GitHub Pages hosts the README, and GitHub Actions runs the CLI tests on each push.
+
