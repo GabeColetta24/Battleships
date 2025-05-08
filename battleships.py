@@ -160,7 +160,8 @@ def play_game(size=5):
                     r, c = int(r_str), int(c_str)
                 except ValueError:
                     print(
-                        "⚠️ Invalid format. Please enter two numbers separated by a space."
+                        "⚠️ Invalid format. Please enter two numbers separated "
+                        "by a space."
                     )
                     continue
 
