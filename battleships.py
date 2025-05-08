@@ -1,4 +1,9 @@
 import random
+import colorama
+from colorama import Fore, Style
+
+# Initialize colorama so colors reset after each print
+colorama.init(autoreset=True)
 
 class Board:
     """
@@ -70,21 +75,26 @@ class Board:
 
     def display(self, reveal=False):
         """
-        Print the board.
+        Print the board with optional reveal of ships.
         - reveal=False: hides unhit ships (shows only hits/misses)
         - reveal=True: shows all ships
         """
-        # Print column headers
+        # Column headers
         header = '   ' + ' '.join(str(i) for i in range(self.size))
         print(header)
-        # Print each row with its index
+        # Each row
         for idx, row in enumerate(self.grid):
             row_str = []
             for cell in row:
                 if cell == self.SHIP and not reveal:
-                    row_str.append(self.EMPTY)
+                    display_char = self.EMPTY
+                elif cell == self.HIT:
+                    display_char = Fore.RED + cell + Style.RESET_ALL
+                elif cell == self.MISS:
+                    display_char = Fore.BLUE + cell + Style.RESET_ALL
                 else:
-                    row_str.append(cell)
+                    display_char = cell
+                row_str.append(display_char)
             print(f"{idx}  " + ' '.join(row_str))
 
     def register_shot(self, r, c):
