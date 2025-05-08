@@ -50,7 +50,7 @@ Once installed and your virtual environment is active:
     ```bash
     python battleships.py
 2. **Understand the prompt**: the game displays your own board (ships revealed), then shows an enemy board before your shot.
-3. **Enter your shot**: input two coordinates—row and column—each from 0 to 4, separated by a space (e.g. 1 3), where the first number is the row and the second is the column.
+3. **Enter your shot**: input two coordinates (row and column) each from 0 to 4, separated by a space (e.g. 1 3), where the first number is the row and the second is the column.
 4. **View the result**: the CLI will indicate a hit, miss, or ship sunk, with appropriate color-coded markers.
 5. **Computer's turn**: the AI will then take a shot and display your updated board.
 6. Repeat until all ships on one side are sunk.
