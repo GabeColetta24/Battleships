@@ -33,8 +33,8 @@ def test_register_shot_miss(small_board):
 def test_register_shot_hit_and_sunk():
     # Single-segment ship forced at size=1
     b = Board(size=3, ship_sizes=[1])
-    # The ship’s only coord
-    (r, c), = b.ships
+    # Grab the only coordinate from the only ship
+    r, c = b.ships[0][0]
     status, length = b.register_shot(r, c)
     assert status == 'sunk'
     assert length == 1
