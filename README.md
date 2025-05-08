@@ -55,3 +55,11 @@ Once installed and your virtual environment is active:
 5. **Computer's turn**: the AI will then take a shot and display your updated board.
 6. Repeat until all ships on one side are sunk.
 7. **Quit early**: press Ctrl+C to exit the game at any time.
+
+## Planning
+
+I mapped out the game using a flowchart before coding
+
+![Flowchart of game logic](assets/documentation/battleship-flowchart.png)
+
+This flowchart provided a clear blueprint for implementation, ensuring that each step (ship placement, input validation, hit/miss handling, and win detection) was developed in a logical order. 
