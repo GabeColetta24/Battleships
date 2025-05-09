@@ -1,3 +1,4 @@
 colorama
 pytest
 flake8
+flask
