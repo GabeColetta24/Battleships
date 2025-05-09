@@ -129,3 +129,9 @@ This flowchart provided a clear blueprint for implementation, ensuring that each
 
 > **Note:** This is a CLI application. GitHub Pages hosts the README, and GitHub Actions runs the CLI tests on each push.
 
+## Acknowledgements
+
+- [Colorama](https://pypi.org/project/colorama/) – for easy terminal coloring  
+- [Black](https://github.com/psf/black) – for auto-formatting Python code  
+- [flake8](https://flake8.pycqa.org/) – for linting and style checks  
+- StackOverflow and the Python docs for various implementation tips
