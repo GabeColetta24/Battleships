@@ -69,23 +69,42 @@ This flowchart provided a clear blueprint for implementation, ensuring that each
 - **Off-grid input**  
   Enter `9 9` → ⚠️ Displays “Off-grid or already shot” error and re-prompts.
 
+  ![Off-grid input example](assets/documentation/off-grid.png)
+
 - **Repeat shot**  
   Enter the same coordinates twice (e.g. `1 1` then `1 1`) → ⚠️ Displays “already shot” error and re-prompts.
+
+  ![Repeat shot example](assets/documentation/already-shot.png)
+
+- **Invalid format (missing space)**  
+  Enter `22` → ⚠️ Displays “Invalid format. Please enter two numbers separated by a space.” and re-prompts.
+
+  ![Invalid format example](assets/documentation/invalid.png)
 
 - **Hit**  
   Shoot a cell containing a ship → ✅ Displays “Hit!” and marks the cell in red.
 
+  ![Hit example](assets/documentation/hit.png)
+
 - **Miss**  
   Shoot an empty cell → ❌ Displays “Miss.” and marks the cell in blue.
+
+  ![Miss example](assets/documentation/miss.png)
 
 - **Sunk**  
   Hit the final segment of a ship → 💥 Displays “You just sank an enemy ship of length X!”
 
+  ![Sunk example](assets/documentation/sink.png)
+
 - **Win condition**  
   Sink all enemy ships → 🎉 Displays “You sank all the enemy ships! You win!”
 
+  ![Win example](assets/documentation/win.png)
+
 - **Loss condition**  
   Have all your ships sunk → 💀 Displays “All your ships have been sunk. Game over.”
+
+  ![Loss example](assets/documentation/lose.png)
 
 ### Code Style & Linting
 
