@@ -142,7 +142,8 @@ This flowchart provided a clear blueprint for implementation, ensuring that each
 3. Click **Save**.  
 4. After a minute, the banner will show your site URL (e.g. `https://GabeColetta24.github.io/Battleships/`).  
 
-- **Live demo**: https://GabeColetta24.github.io/Battleships/  
+- **Live demo (Heroku)**: https://battleships-gcoletta-f205116c7c9d.herokuapp.com/
+- **GitHub Pages (README)**: https://GabeColetta24.github.io/Battleships/  
 - **CI workflow**:  
   ![CI](https://github.com/GabeColetta24/Battleships/actions/workflows/python-app.yml/badge.svg)
 
