@@ -1,8 +1,13 @@
-from flask import Flask
-from flask import Response
-from battleships import Board
+import os
 import io
 import sys
+
+# Disable ANSI colors for web demo
+os.environ["ANSI_COLORS_DISABLED"] = "1"
+
+from flask import Flask, Response
+
+from battleships import Board
 
 app = Flask(__name__)
 
