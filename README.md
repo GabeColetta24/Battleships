@@ -64,6 +64,48 @@ I mapped out the game using a flowchart before coding
 
 This flowchart provided a clear blueprint for implementation, ensuring that each step (ship placement, input validation, hit/miss handling, and win detection) was developed in a logical order. 
 
+## Manual Testing
+
+- **Off-grid input**  
+  Enter `9 9` → ⚠️ Displays “Off-grid or already shot” error and re-prompts.
+
+- **Repeat shot**  
+  Enter the same coordinates twice (e.g. `1 1` then `1 1`) → ⚠️ Displays “already shot” error and re-prompts.
+
+- **Hit**  
+  Shoot a cell containing a ship → ✅ Displays “Hit!” and marks the cell in red.
+
+- **Miss**  
+  Shoot an empty cell → ❌ Displays “Miss.” and marks the cell in blue.
+
+- **Sunk**  
+  Hit the final segment of a ship → 💥 Displays “You just sank an enemy ship of length X!”
+
+- **Win condition**  
+  Sink all enemy ships → 🎉 Displays “You sank all the enemy ships! You win!”
+
+- **Loss condition**  
+  Have all your ships sunk → 💀 Displays “All your ships have been sunk. Game over.”
+
+### Code Style & Linting
+
+- The codebase is formatted with [Black](https://github.com/psf/black) (line length 88) and passes `flake8 battleships.py tests/` with zero errors, ensuring PEP8 compliance.
+
+### Bugs Found & Fixed
+
+- **Test unpacking error**  
+  In `tests/test_board.py`, unpacking a list of tuples with `(r, c), = b.ships` raised a `ValueError`. Updated to `r, c = b.ships[0][0]` to correctly index the single-coordinate ship.
+
+- **CI hang**  
+  The initial smoke-test invoked the interactive loop. Resolved by moving to a standalone pytest suite in CI.
+
+- **Long line in error message**  
+  A runtime print statement exceeded PEP8’s line-length limit. Wrapped the string literal across two lines inside a `print(...)` call.
+
+- **Imports in `conftest.py`**  
+  Consolidated the `sys.path` hack into `tests/conftest.py` and ensured each import is on its own line to satisfy flake8’s E402/E401 rules.
+
+
 ## Future Enhancements
 
 - **Dynamic grid sizing at runtime**: Prompt the player to choose grid dimensions before starting the game.
