@@ -5,6 +5,10 @@ import sys
 # Disable ANSI colors for web demo
 os.environ["ANSI_COLORS_DISABLED"] = "1"
 
+# Force Colorama to strip any ANSI escapes
+import colorama
+colorama.init(strip=True)
+
 from flask import Flask, Response
 
 from battleships import Board
