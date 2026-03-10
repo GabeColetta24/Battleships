@@ -35,12 +35,12 @@ Welcome to **Battleships**, a terminal-based classic naval strategy game. You co
     ```bash
     python3 -m venv venv
     source venv/bin/activate
-4. **Install dependancies**: 
+4. **Install dependencies**: 
     ```bash
     pip install -r requirements.txt
 5. **Run the game**: 
     ```bash
-    python battleships.py
+    python3 battleships.py
 
 ## How to Use
 
@@ -48,7 +48,7 @@ Once installed and your virtual environment is active:
 
 1. **Start the game**:
     ```bash
-    python battleships.py
+    python3 battleships.py
 2. **Understand the prompt**: the game displays your own board (ships revealed), then shows an enemy board before your shot.
 3. **Enter your shot**: input two coordinates (row and column) each from 0 to 4, separated by a space (e.g. 1 3), where the first number is the row and the second is the column.
 4. **View the result**: the CLI will indicate a hit, miss, or ship sunk, with appropriate color-coded markers.
