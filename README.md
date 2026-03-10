@@ -16,6 +16,7 @@ Welcome to **Battleships**, a terminal-based classic naval strategy game. You co
   - Misses (`·`) displayed in blue
   - Notifications when individual ships are sunk
 - **Simple AI opponent**: Computer fires at random unseen cells
+- Browser-based terminal gameplay via Heroku deployment
 
 ## Technologies Used
 
@@ -40,7 +41,7 @@ Welcome to **Battleships**, a terminal-based classic naval strategy game. You co
     pip install -r requirements.txt
 5. **Run the game**: 
     ```bash
-    python3 battleships.py
+    python3 run.py
 
 ## How to Use
 
@@ -48,7 +49,7 @@ Once installed and your virtual environment is active:
 
 1. **Start the game**:
     ```bash
-    python3 battleships.py
+    python3 run.py
 2. **Understand the prompt**: the game displays your own board (ships revealed), then shows an enemy board before your shot.
 3. **Enter your shot**: input two coordinates (row and column) each from 0 to 4, separated by a space (e.g. 1 3), where the first number is the row and the second is the column.
 4. **View the result**: the CLI will indicate a hit, miss, or ship sunk, with appropriate color-coded markers.
@@ -108,7 +109,7 @@ This flowchart provided a clear blueprint for implementation, ensuring that each
 
 ### Code Style & Linting
 
-- The codebase is formatted with [Black](https://github.com/psf/black) (line length 88) and passes `flake8 battleships.py tests/` with zero errors, ensuring PEP8 compliance.
+- The codebase passes flake8 with no significant issues, helping ensure readable and PEP8-compliant Python code.
 
 ### Bugs Found & Fixed
 
@@ -133,21 +134,43 @@ This flowchart provided a clear blueprint for implementation, ensuring that each
 - **Multiplayer mode**: Add local or networked two-player functionality.
 - **Replay & statistics**: Track and display win/loss records and session stats.
 
+
 ## Deployment & CI
 
-### How to Deploy (GitHub Pages)
+This project is deployed using **Heroku** and the **Code Institute Python Terminal Template**, which allows the command-line Battleships game to run inside a browser terminal.
 
-1. In your GitHub repo, go to **Settings** → **Pages**.  
-2. Under **Source**, select **Branch: main** and **Folder: /(root)**.  
-3. Click **Save**.  
-4. After a minute, the banner will show your site URL (e.g. `https://GabeColetta24.github.io/Battleships/`).  
+### Heroku Deployment Steps
 
-- **Live demo (Heroku)**: https://battleships-gcoletta-f205116c7c9d.herokuapp.com/
-- **GitHub Pages (README)**: https://GabeColetta24.github.io/Battleships/  
-- **CI workflow**:  
-  ![CI](https://github.com/GabeColetta24/Battleships/actions/workflows/python-app.yml/badge.svg)
+1. Create a new app on **Heroku**.
+2. Connect the Heroku app to the GitHub repository.
+3. Add the required **buildpacks** in the following order:
+  ```text
+  heroku/nodejs
+  heroku/python
+  ```
+4. Add the following **config variable** in the Heroku settings: PORT = 8000
+5. Deploy the **main branch**.
 
-> **Note:** This is a CLI application. GitHub Pages hosts the README, and GitHub Actions runs the CLI tests on each push.
+### Live Application
+
+The deployed game can be played here:
+
+https://battleships-gcoletta-f205116c7c9d.herokuapp.com/
+
+Click **Run Program** to start the game inside the browser terminal.
+
+### GitHub Pages
+
+The project documentation (README) is also available via GitHub Pages:
+
+https://GabeColetta24.github.io/Battleships/
+
+### Continuous Integration
+
+GitHub Actions is used to run automated tests and validation checks on each push.
+
+![CI](https://github.com/GabeColetta24/Battleships/actions/workflows/python-app.yml/badge.svg)
+
 
 ## Acknowledgements
 
